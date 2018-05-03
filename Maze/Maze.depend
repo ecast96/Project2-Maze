@@ -1,0 +1,183 @@
+# depslib dependency file v1.0
+1524473884 source:c:\maze\src\enemies.cpp
+	<Enemies.h>
+	<iostream>
+
+1524475098 c:\maze\include\enemies.h
+	<CommonThings.h>
+	<Maze.h>
+	<time.h>
+	<thread>
+	<string>
+	<math.h>
+
+1524046490 c:\maze\include\commonthings.h
+	<GL/gl.h>
+	<SOIL.h>
+	<iostream>
+	<Timer.h>
+
+1215483208 c:\maze\common\inc\soil.h
+
+1524046490 c:\maze\include\timer.h
+	<time.h>
+
+1525125971 c:\maze\include\maze.h
+	<CommonThings.h>
+	<string.h>
+	<gl/gl.h>
+	<GL/glut.h>
+	<SOIL.h>
+	<iostream>
+	<Timer.h>
+	<math.h>
+
+1489447130 c:\maze\common\inc\gl\glut.h
+	<windows.h>
+	<stdlib.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1525125983 source:c:\maze\src\maze.cpp
+	<Maze.h>
+
+1524594554 source:c:\maze\src\player.cpp
+	<Player.h>
+
+1524590816 c:\maze\include\player.h
+	<CommonThings.h>
+	<string.h>
+	<gl/gl.h>
+	<GL/glut.h>
+	<SOIL.h>
+	<iostream>
+	<Timer.h>
+	<math.h>
+
+1524046490 source:c:\maze\src\timer.cpp
+	"Timer.h"
+
+1524476010 source:c:\maze\src\wall.cpp
+	<wall.h>
+	<iostream>
+
+1524475940 c:\maze\include\wall.h
+	<CommonThings.h>
+	<string.h>
+	<gl/gl.h>
+	<GL/glut.h>
+	<SOIL.h>
+	<iostream>
+	<Timer.h>
+	<math.h>
+
+1525315242 source:c:\maze\main.cpp
+	<string.h>
+	<CommonThings.h>
+	<Maze.h>
+	<iostream>
+	<fstream>
+	<sstream>
+	<string>
+	<Timer.h>
+	<player.h>
+	<vector>
+	<utility>
+	<GLUT/glut.h>
+	<GL/glut.h>
+	<stdlib.h>
+	<Enemies.h>
+	<wall.h>
+	<math.h>
+
+1525317170 source:c:\users\young\documents\github\project2-maze\maze\main.cpp
+	<string.h>
+	<CommonThings.h>
+	<Maze.h>
+	<iostream>
+	<fstream>
+	<sstream>
+	<string>
+	<Timer.h>
+	<player.h>
+	<vector>
+	<utility>
+	<GLUT/glut.h>
+	<GL/glut.h>
+	<stdlib.h>
+	<Enemies.h>
+	<wall.h>
+	<math.h>
+
+1524046490 c:\users\young\documents\github\project2-maze\maze\include\commonthings.h
+	<GL/gl.h>
+	<SOIL.h>
+	<iostream>
+	<Timer.h>
+
+1215483208 c:\users\young\documents\github\project2-maze\maze\common\inc\soil.h
+
+1524046490 c:\users\young\documents\github\project2-maze\maze\include\timer.h
+	<time.h>
+
+1525125971 c:\users\young\documents\github\project2-maze\maze\include\maze.h
+	<CommonThings.h>
+	<string.h>
+	<gl/gl.h>
+	<GL/glut.h>
+	<SOIL.h>
+	<iostream>
+	<Timer.h>
+	<math.h>
+
+1489447130 c:\users\young\documents\github\project2-maze\maze\common\inc\gl\glut.h
+	<windows.h>
+	<stdlib.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1524590816 c:\users\young\documents\github\project2-maze\maze\include\player.h
+	<CommonThings.h>
+	<string.h>
+	<gl/gl.h>
+	<GL/glut.h>
+	<SOIL.h>
+	<iostream>
+	<Timer.h>
+	<math.h>
+
+1524475098 c:\users\young\documents\github\project2-maze\maze\include\enemies.h
+	<CommonThings.h>
+	<Maze.h>
+	<time.h>
+	<thread>
+	<string>
+	<math.h>
+
+1524475940 c:\users\young\documents\github\project2-maze\maze\include\wall.h
+	<CommonThings.h>
+	<string.h>
+	<gl/gl.h>
+	<GL/glut.h>
+	<SOIL.h>
+	<iostream>
+	<Timer.h>
+	<math.h>
+
+1524473884 source:c:\users\young\documents\github\project2-maze\maze\src\enemies.cpp
+	<Enemies.h>
+	<iostream>
+
+1525125983 source:c:\users\young\documents\github\project2-maze\maze\src\maze.cpp
+	<Maze.h>
+
+1524594554 source:c:\users\young\documents\github\project2-maze\maze\src\player.cpp
+	<Player.h>
+
+1524046490 source:c:\users\young\documents\github\project2-maze\maze\src\timer.cpp
+	"Timer.h"
+
+1524476010 source:c:\users\young\documents\github\project2-maze\maze\src\wall.cpp
+	<wall.h>
+	<iostream>
+
