@@ -121,12 +121,14 @@ void readFile()
                 cout << "Arrows placed at: " << a << "," << b << endl;
                 M->loadSetOfArrowsImage("images/arrwset.png");      // load set of arrows image
                 M->placeStArrws(a, b);
+                myMatrix[a][b] = 5;
             }
             if(label == "chest"){
                 cout << "Chest found at: " << a << "," << b << endl;
                 M->loadBackgroundImage("images/bak.jpg");           // Load maze background image
                 M->loadChestImage("images/chest.png");              // load chest image
                 M->placeChest(a, b);
+                myMatrix[a][b] = 4;
             }
         }
     }
@@ -262,6 +264,13 @@ void key(unsigned char key, int x, int y)
 
  void idle(void)
 {
+    if(P->arrowStatus == 1){
+        if(myMatrix[P->getArrowLoc().x][P->getArrowLoc().y] == 1)
+            P->arrowStatus = 0;
+        if(E[0].getEnemyLoc().x == P->getArrowLoc().x && E[0].getEnemyLoc().y == P->getArrowLoc().y)
+            E[0].live = 0;
+    }
+
 
     //Your Code here
     glutPostRedisplay();
@@ -291,8 +300,20 @@ void mouse(int btn, int state, int x, int y){
      glutPostRedisplay();
 };
 
+void checkArrowCollision()
+{
+
+
+}
+
 void Specialkeys(int key, int x, int y)
 {
+    if(myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] == 4)
+        M->liveChest = 0;
+
+    if(myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] == 5)
+        M->liveSetOfArrws = 0;
+
 
     // Your Code here
     switch(key)
