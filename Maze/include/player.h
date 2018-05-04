@@ -40,6 +40,7 @@ class Player
 
         bool arrowStatus;                  // arrow is active or not
         bool livePlayer;                   // Player live or dead
+        bool shootMode;
         loc plyLoc;                        // viewport location of the player
         float unitWidth;                   // Unit width of the grid
 

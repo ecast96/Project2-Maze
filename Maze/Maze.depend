@@ -90,7 +90,7 @@
 	<wall.h>
 	<math.h>
 
-1525407298 source:c:\users\young\documents\github\project2-maze\maze\main.cpp
+1525462356 source:c:\users\young\documents\github\project2-maze\maze\main.cpp
 	<string.h>
 	<CommonThings.h>
 	<Maze.h>
@@ -136,7 +136,7 @@
 	<GL/gl.h>
 	<GL/glu.h>
 
-1525382840 c:\users\young\documents\github\project2-maze\maze\include\player.h
+1525462469 c:\users\young\documents\github\project2-maze\maze\include\player.h
 	<CommonThings.h>
 	<string.h>
 	<gl/gl.h>
@@ -171,7 +171,7 @@
 1525125983 source:c:\users\young\documents\github\project2-maze\maze\src\maze.cpp
 	<Maze.h>
 
-1525407409 source:c:\users\young\documents\github\project2-maze\maze\src\player.cpp
+1525462469 source:c:\users\young\documents\github\project2-maze\maze\src\player.cpp
 	<Player.h>
 
 1524046490 source:c:\users\young\documents\github\project2-maze\maze\src\timer.cpp

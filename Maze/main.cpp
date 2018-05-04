@@ -226,10 +226,19 @@ void key(unsigned char key, int x, int y)
 {
     switch (key)
     {
+        case 'z':
+            P->shootMode = !(P->shootMode);
+            if(P->shootMode == true)
+                cout << "In shooting mode!\n";
+            else
+                cout << "In walking mode!\n";
+        break;
+
         case ' ':
           // if(!M->liveSetOfArrws)      // if setof arrows were picked by player
              P->shootArrow();
         break;
+
         case 27 :                       // esc key to exit
         case 'q':
             exit(0);
@@ -325,8 +334,14 @@ void Specialkeys(int key, int x, int y)
     switch(key)
     {
     case GLUT_KEY_UP:
-         if(!(myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y + 1] == 1))
-            P->movePlayer("up");
+         if(P->shootMode == false){
+             if(!(myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y + 1] == 1))
+                P->movePlayer("up");
+         }
+         else {
+            P->playerDir = "up";
+            P->shootArrow();
+         }
          break;
         /*
          if(!(myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y + 1] == 1) && E[0].live)
@@ -335,8 +350,14 @@ void Specialkeys(int key, int x, int y)
          */
 
     case GLUT_KEY_DOWN:
-         if(!(myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y - 1] == 1))
-            P->movePlayer("down");
+         if(P->shootMode == false){
+             if(!(myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y - 1] == 1))
+                P->movePlayer("down");
+         }
+         else {
+            P->playerDir = "down";
+            P->shootArrow();
+         }
          break;
         /*
          if(!(myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y - 1] == 1) && E[0].live)
@@ -344,8 +365,14 @@ void Specialkeys(int key, int x, int y)
          break;
         */
     case GLUT_KEY_LEFT:
-        if(!(myMatrix[P->getPlayerLoc().x - 1][P->getPlayerLoc().y] == 1))
-            P->movePlayer("left");
+        if(P->shootMode == false){
+            if(!(myMatrix[P->getPlayerLoc().x - 1][P->getPlayerLoc().y] == 1))
+                P->movePlayer("left");
+        }
+        else {
+            P->playerDir = "left";
+            P->shootArrow();
+        }
         break;
         /*
          if(!(myMatrix[E[0].getEnemyLoc().x - 1][E[0].getEnemyLoc().y] == 1) && E[0].live)
@@ -353,8 +380,14 @@ void Specialkeys(int key, int x, int y)
          break;
         */
     case GLUT_KEY_RIGHT:
+         if(P->shootMode == false){
          if(!(myMatrix[P->getPlayerLoc().x + 1][P->getPlayerLoc().y] == 1))
             P->movePlayer("right");
+         }
+         else {
+            P->playerDir = "right";
+            P->shootArrow();
+         }
          break;
         /*
          if(!(myMatrix[E[0].getEnemyLoc().x + 1][E[0].getEnemyLoc().y] == 1) && E[0].live)

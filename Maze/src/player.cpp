@@ -16,6 +16,7 @@ Player::Player()
     arrAngle =0;
     arrowStatus = false;
     livePlayer = true;
+    shootMode = false;
 }
 
 Player::~Player()
