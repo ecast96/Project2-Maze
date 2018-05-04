@@ -30,6 +30,8 @@ class Enemies
         float unitWidth;                    // Unit width of the grid
         int stepsPerMove;                   // Step count for animation
         bool live;                          // Status of the Enemy
+        bool drawLive = false;
+        loc enmLoc;                        // location of the enemy
     protected:
 
     private:
@@ -40,7 +42,6 @@ class Enemies
          float xmax, xmin,ymax,ymin;        // Animated Texture mapping
          bool up,down,left,right;           // move direction
          float moveDis=0;                   // Moving distance for animation
-         loc enmLoc;                        // location of the enemy
 };
 
 #endif // ENEMIES_H

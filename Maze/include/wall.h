@@ -30,10 +30,10 @@ class wall
             int gridSize;                  // grid size
 
             bool liveWall;                 // wall status (broken or not)
+            loc wallBrk;                 // viewport location of the wall
     protected:
 
     private:
-              loc wallBrk;                 // viewport location of the wall
               GLuint wallTex;              // wall texture handler
               GridLoc GetWallLoc;          // Grid Location of the wall
 };
