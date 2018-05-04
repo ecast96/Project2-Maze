@@ -224,7 +224,7 @@ void Player::movePlayer(char* dir)
    {
         playerDir = "up";
         if(T->GetTicks()>1)
-        { if(plyLoc.y< 1-unitWidth/2)
+        { if(plyLoc.y< 1 - unitWidth/2 )
             plyLoc.y += t;
             if(xmax>=1){
                 xmax =1/(float)frames;

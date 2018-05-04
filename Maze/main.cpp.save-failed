@@ -264,15 +264,15 @@ void key(unsigned char key, int x, int y)
 
  void idle(void)
 {
-    //Collision with enemy and player
     if(E[0].getEnemyLoc().x == P->getPlayerLoc().x && E[0].getEnemyLoc().y == P->getPlayerLoc().y){
         P->livePlayer = false;
     }
+    //Arrow collision with walls
     if(P->arrowStatus == 1){
-        //Collision with arrow and walls
+        cout << P->getArrowLoc().x << "," << P->getArrowLoc().y << endl;
         if(myMatrix[P->getArrowLoc().x][P->getArrowLoc().y] == 1)
             P->arrowStatus = 0;
-        //Collisions with arrows and enemies
+
         for(int i = 0; i < enemyCounter; i++){
             if(E[i].getEnemyLoc().x == P->getArrowLoc().x && E[i].getEnemyLoc().y == P->getArrowLoc().y){
                 E[i].live = false;
@@ -283,6 +283,7 @@ void key(unsigned char key, int x, int y)
         }
     }
 
+    //Your Code here
     glutPostRedisplay();
 }
 
@@ -324,8 +325,9 @@ void Specialkeys(int key, int x, int y)
     {
     case GLUT_KEY_UP:
          cout << W[wallCounter - 1].wallBrk.x << "," << W[wallCounter-1].wallBrk.y << endl;
+
          if (P->plyLoc.y < W[wallCounter-1].wallBrk.y + .1 - P->unitWidth)
-            P->movePlayer("up");
+             P->movePlayer("up");
 
          /*
          //cout<< P->getPlayerLoc().x<< "    "<<P->getPlayerLoc().y<<endl;
@@ -343,56 +345,33 @@ void Specialkeys(int key, int x, int y)
 
     case GLUT_KEY_DOWN:
          //cout<< P->getPlayerLoc().x<< "    "<<P->getPlayerLoc().y<<endl;
-
-         if (P->plyLoc.y > W[2].wallBrk.y - .2 + P->unitWidth)
-             P->movePlayer("down");
-
-         /*
          if(myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y - 1] == 1)
             cout << endl;
             //cout << "Wall detected at: " << P->getPlayerLoc().x << "    " << P->getPlayerLoc().y-1 << endl;
          else
             P->movePlayer("down");
-         */
-
          if(!(myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y - 1] == 1) && E[0].live)
             E[0].moveEnemy("down");
          break;
 
     case GLUT_KEY_LEFT:
          //cout<< P->getPlayerLoc().x<< "    "<<P->getPlayerLoc().y<<endl;
-
-         if(P->plyLoc.x > W[3].wallBrk.x - .1 + P->unitWidth)
-            P->movePlayer("left");
-
-        /*
          if(myMatrix[P->getPlayerLoc().x - 1][P->getPlayerLoc().y] == 1)
             cout << endl;
             //cout << "Wall detected at: " << P->getPlayerLoc().x-1 << "    " << P->getPlayerLoc().y << endl;
          else
             P->movePlayer("left");
-        */
-
          if(!(myMatrix[E[0].getEnemyLoc().x - 1][E[0].getEnemyLoc().y] == 1) && E[0].live)
             E[0].moveEnemy("left");
          break;
 
     case GLUT_KEY_RIGHT:
          //cout<< P->getPlayerLoc().x<< "    "<<P->getPlayerLoc().y<<endl;
-
-
-         if(P->plyLoc.x < W[8].wallBrk.x + .25 - P->unitWidth)
-            P->movePlayer("right");
-
-
-        /*
          if(myMatrix[P->getPlayerLoc().x + 1][P->getPlayerLoc().y] == 1)
             cout << endl;
             //cout << "Wall detected at: " << P->getPlayerLoc().x+1 << "    " << P->getPlayerLoc().y << endl;
          else
             P->movePlayer("right");
-         */
-
          if(!(myMatrix[E[0].getEnemyLoc().x + 1][E[0].getEnemyLoc().y] == 1) && E[0].live)
             E[0].moveEnemy("right");
          break;

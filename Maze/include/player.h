@@ -40,13 +40,14 @@ class Player
 
         bool arrowStatus;                  // arrow is active or not
         bool livePlayer;                   // Player live or dead
+        loc plyLoc;                        // viewport location of the player
+        float unitWidth;                   // Unit width of the grid
+
     protected:
 
         float t;                           // Ticker for animation
         void timer();                      // Timer for animation
         int gridSize;                      // Grid Size
-        float unitWidth;                   // Unit width of the grid
-
     private:
 
     private:
@@ -57,7 +58,6 @@ class Player
         int arrYdir;                       // arrow direction y
         float arrAngle;                    // animation direction of the arrow
         loc arrowLoc;                      // viewport location of the arrow
-        loc plyLoc;                        // viewport location of the player
         loc converter(int, int);           // convert Grid location to viewport
         int stepsPerMove;                  // animation steps
 
