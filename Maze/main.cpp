@@ -40,7 +40,7 @@ int **myMatrix;
 const int wallAmount = mazeSize * mazeSize;
 int wallCounter = 1;
 
-const int enemyAmount = 3;
+const int enemyAmount = 4;
 int enemyCounter = 0;
 
 Maze *M = new Maze(mazeSize);                         // Set Maze grid size
@@ -322,8 +322,11 @@ void key(unsigned char key, int x, int y)
 
     //Broken for game edges -possible fix: check raw x, y (floats)
     if(P->arrowStatus == 1){
+        cout << "Arrow location: " << P->getArrowRaw().x << "," << P->getArrowRaw().y << endl;
         //Collision with arrow and walls
-        if(myMatrix[P->getArrowLoc().x][P->getArrowLoc().y] == 1)
+        if(myMatrix[P->getArrowLoc().x][P->getArrowLoc().y] == 1
+           || P->getArrowRaw().x - .125 < -1.0 || P->getArrowRaw().x + .125  > 1
+           || P->getArrowRaw().y - .05 < -1.0 || P->getArrowRaw().y + .05 > 1.0)
             P->arrowStatus = 0;
 
         //Collisions with arrows and enemies
@@ -364,7 +367,7 @@ void mouse(int btn, int state, int x, int y){
      glutPostRedisplay();
 };
 
-
+// Allows player to shoot when player reaches set of arrows
 void checkArrows(int x, int y){
     if(myMatrix[x][y] == 5){
         cout << "Player has gathered arrows!\n";

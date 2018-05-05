@@ -31,12 +31,12 @@ void Player::drawArrow()
 if(arrowStatus){
    glColor3f(1.0,1.0,1.0);
 
-     if(T->GetTicks()>30)
+     if(T->GetTicks()>35)
         {
-            if(arrowLoc.x>=-1 && arrowLoc.x<=1)
+            if(arrowLoc.x>=-1.1 && arrowLoc.x<=1.1)
                 arrowLoc.x += t*arrXdir;
             else arrowStatus = false;
-            if(arrowLoc.y>=-1 && arrowLoc.y<=1)
+            if(arrowLoc.y>=-1.1 && arrowLoc.y<=1.1)
                 arrowLoc.y += t*arrYdir;
             else arrowStatus = false;
            T->Reset();
@@ -73,7 +73,7 @@ void Player::shootArrow()
         arrAngle = -90;
         arrXdir=-1;
         arrYdir=0;
-        arrowLoc.x = plyLoc.x-unitWidth/2;
+        arrowLoc.x = plyLoc.x-1/3;
         arrowLoc.y = plyLoc.y;
       }
       if(strcmp(playerDir, "right")==0)
@@ -81,7 +81,7 @@ void Player::shootArrow()
         arrAngle =90;
         arrXdir=1;
         arrYdir=0;
-        arrowLoc.x = plyLoc.x+unitWidth/2;
+        arrowLoc.x = plyLoc.x+1/3;
         arrowLoc.y = plyLoc.y;
       }
       if(strcmp(playerDir, "up")==0)
@@ -90,7 +90,7 @@ void Player::shootArrow()
         arrYdir=1;
         arrAngle =180;
 
-        arrowLoc.y = plyLoc.y+unitWidth/2;
+        arrowLoc.y = plyLoc.y+1/3;
         arrowLoc.x = plyLoc.x;
       }
       if(strcmp(playerDir, "down")==0)
@@ -99,7 +99,7 @@ void Player::shootArrow()
         arrYdir=-1;
         arrAngle= 0;
 
-        arrowLoc.y = plyLoc.y-unitWidth/2;
+        arrowLoc.y = plyLoc.y-1/3;
         arrowLoc.x = plyLoc.x;
       }
      }
@@ -120,6 +120,11 @@ GridLoc Player::getArrowLoc()
     val.y = (int)(ceil((arrowLoc.y +(1-unitWidth))/unitWidth));
 
    return val;
+}
+
+loc Player::getArrowRaw()
+{
+    return arrowLoc;
 }
 
 

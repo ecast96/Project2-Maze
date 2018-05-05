@@ -46,11 +46,11 @@ class Maze
       bool liveChest;                     // status of the chest (collected or not)
       bool liveSetOfArrws;                // status of the arrows(collected or not)
       bool gameOver;
+      float unitWidth;                    // Unit width of the grid
 
     protected:
 
       int gridSize;                       // grid size
-      float unitWidth;                    // Unit width of the grid
 
     private:
 
