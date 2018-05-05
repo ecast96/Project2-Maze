@@ -40,7 +40,7 @@ int **myMatrix;
 const int wallAmount = mazeSize * mazeSize;
 int wallCounter = 1;
 
-const int enemyAmount = 4;
+const int enemyAmount = 5;
 int enemyCounter = 0;
 
 Maze *M = new Maze(mazeSize);                         // Set Maze grid size
@@ -204,13 +204,13 @@ void display(void)
 {
     if(M->gameOver == true){
         static const auto hasWon = [] { PrintMatrix(); return true;}();
-        /*
+
         glClear (GL_COLOR_BUFFER_BIT);        // clear display screen
         glPushMatrix();
         M->drawBackground();
         glPopMatrix();
         glutSwapBuffers();
-        */
+
 
     }else {
         glClear (GL_COLOR_BUFFER_BIT);        // clear display screen
@@ -322,20 +322,20 @@ void key(unsigned char key, int x, int y)
 
     //Broken for game edges -possible fix: check raw x, y (floats)
     if(P->arrowStatus == 1){
-        cout << "Arrow location: " << P->getArrowRaw().x << "," << P->getArrowRaw().y << endl;
-        //Collision with arrow and walls
-        if(myMatrix[P->getArrowLoc().x][P->getArrowLoc().y] == 1
-           || P->getArrowRaw().x - .125 < -1.0 || P->getArrowRaw().x + .125  > 1
-           || P->getArrowRaw().y - .05 < -1.0 || P->getArrowRaw().y + .05 > 1.0)
-            P->arrowStatus = 0;
+        if(P->getArrowLoc().x - 1 >= -1&& P->getArrowLoc().x + 1 <= 10){
+            cout << "Arrow location: " << P->getArrowLoc().x << "," << P->getArrowLoc().y << endl;
+            //Collision with arrow and walls
+            if(myMatrix[P->getArrowLoc().x][P->getArrowLoc().y] == 1)
+                P->arrowStatus = 0;
 
-        //Collisions with arrows and enemies
-        for(int i = 0; i < enemyCounter; i++){
-            if(E[i].getEnemyLoc().x == P->getArrowLoc().x && E[i].getEnemyLoc().y == P->getArrowLoc().y){
-                E[i].live = false;
-                myMatrix[E[i].getEnemyLoc().x][E[i].getEnemyLoc().y] = 0;
-                E[i].placeEnemy(mazeSize + 1, mazeSize + 1);
-                P->arrowStatus = false;
+            //Collisions with arrows and enemies
+            for(int i = 0; i < enemyCounter; i++){
+                if(E[i].getEnemyLoc().x == P->getArrowLoc().x && E[i].getEnemyLoc().y == P->getArrowLoc().y){
+                    E[i].live = false;
+                    myMatrix[E[i].getEnemyLoc().x][E[i].getEnemyLoc().y] = 0;
+                    E[i].placeEnemy(mazeSize + 1, mazeSize + 1);
+                    P->arrowStatus = false;
+                }
             }
         }
     }
@@ -383,7 +383,7 @@ void checkChest(int x, int y){
         M->liveChest = 0;
         M->gameOver = 1; //Going to be used for displaying new screen
         PrintMatrix();
-        exit(0);
+        //exit(0);
     }
 }
 
@@ -394,16 +394,18 @@ void Specialkeys(int key, int x, int y)
     {
     case GLUT_KEY_UP:
          if(P->shootMode == false){
-             if(!(myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y + 1] == 1)){ //Walking mode
-                checkArrows(P->getPlayerLoc().x, P->getPlayerLoc().y + 1);
-                checkChest(P->getPlayerLoc().x, P->getArrowLoc().y + 1);
+             if(P->getPlayerLoc().y + 1 < 10){
+                 if(!(myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y + 1] == 1)){ //Walking mode
+                    //cout << P->getPlayerRaw().x << "," << P->getPlayerRaw().y << endl;
+                    checkArrows(P->getPlayerLoc().x, P->getPlayerLoc().y + 1);
+                    checkChest(P->getPlayerLoc().x, P->getArrowLoc().y + 1);
 
-                myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
-                P->movePlayer("up");
-                myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
+                    myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
+                    P->movePlayer("up");
+                    myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
 
-                PrintMatrix();
-             }
+                 }
+            }
          }
          else if(P->hasArrows == true){ //Shooting mode
             P->playerDir = "up";
@@ -412,27 +414,26 @@ void Specialkeys(int key, int x, int y)
 
         /*
          if(!(myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y + 1] == 1
-              || myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y + 1] == 2) && E[0].live){
-            myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y] = 0;
-            myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y + 1] = 2;
+              || myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y + 1] == 2)){
             E[0].moveEnemy("up");
             }
             */
 
+         PrintMatrix();
          break;
 
 
     case GLUT_KEY_DOWN:
          if(P->shootMode == false){
-             if(!(myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y - 1] == 1)){ //Walking mode
-                checkArrows(P->getPlayerLoc().x, P->getPlayerLoc().y - 1);
-                checkChest(P->getPlayerLoc().x, P->getPlayerLoc().y - 1);
+             if(P->getPlayerLoc().y - 1 >= 0){
+                 if(!(myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y - 1] == 1)){ //Walking mode
+                    checkArrows(P->getPlayerLoc().x, P->getPlayerLoc().y - 1);
+                    checkChest(P->getPlayerLoc().x, P->getPlayerLoc().y - 1);
 
-                myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
-                P->movePlayer("down");
-                myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
-
-                PrintMatrix();
+                    myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
+                    P->movePlayer("down");
+                    myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
+                 }
              }
          }
          else if(P->hasArrows == true){ //Shooting mode
@@ -443,25 +444,24 @@ void Specialkeys(int key, int x, int y)
         /*
          if(!(myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y - 1] == 1
               || myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y - 1] == 2) && E[0].live){
-            myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y] = 0;
-            myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y - 1] = 2;
             E[0].moveEnemy("down");
             }
             */
 
+         PrintMatrix();
          break;
 
     case GLUT_KEY_LEFT:
         if(P->shootMode == false){
-            if(!(myMatrix[P->getPlayerLoc().x - 1][P->getPlayerLoc().y] == 1)){ //Walking mode
-                checkArrows(P->getPlayerLoc().x - 1, P->getPlayerLoc().y);      //If next step is set of arrows
-                checkChest(P->getPlayerLoc().x - 1, P->getPlayerLoc().y);       //If next step is chest/goal
+            if(P->getPlayerLoc().x -1 >= 0){
+                if(!(myMatrix[P->getPlayerLoc().x - 1][P->getPlayerLoc().y] == 1)){ //Walking mode
+                    checkArrows(P->getPlayerLoc().x - 1, P->getPlayerLoc().y);      //If next step is set of arrows
+                    checkChest(P->getPlayerLoc().x - 1, P->getPlayerLoc().y);       //If next step is chest/goal
 
-                myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
-                P->movePlayer("left");
-                myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
-
-                PrintMatrix();
+                    myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
+                    P->movePlayer("left");
+                    myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
+                }
             }
         }
         else if(P->hasArrows == true){ //Shooting mode
@@ -472,39 +472,39 @@ void Specialkeys(int key, int x, int y)
         /*
          if(!(myMatrix[E[0].getEnemyLoc().x - 1][E[0].getEnemyLoc().y] == 1
               || myMatrix[E[0].getEnemyLoc().x - 1][E[0].getEnemyLoc().y] == 2) && E[0].live){
-            myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y] = 0;
-            myMatrix[E[0].getEnemyLoc().x - 1][E[0].getEnemyLoc().y] = 2;
             E[0].moveEnemy("left");
             }
             */
 
+         PrintMatrix();
          break;
 
     case GLUT_KEY_RIGHT:
         if(P->shootMode == false){
-            if(!(myMatrix[P->getPlayerLoc().x + 1][P->getPlayerLoc().y] == 1)){ //Walking mode
-                checkArrows(P->getPlayerLoc().x + 1, P->getPlayerLoc().y);
-                checkChest(P->getPlayerLoc().x + 1, P->getPlayerLoc().y);
+            if(P->getPlayerLoc().x + 1 < 10){
+                if(!(myMatrix[P->getPlayerLoc().x + 1][P->getPlayerLoc().y] == 1)){ //Walking mode
+                    checkArrows(P->getPlayerLoc().x + 1, P->getPlayerLoc().y);
+                    checkChest(P->getPlayerLoc().x + 1, P->getPlayerLoc().y);
 
-                myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
-                P->movePlayer("right");
-                myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
-
-                PrintMatrix();
+                    myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
+                    P->movePlayer("right");
+                    myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
+                }
             }
         }
          else if(P->hasArrows){ //Shooting mode
             P->playerDir = "right";
             P->shootArrow();
          }
+
         /*
          if(!(myMatrix[E[0].getEnemyLoc().x + 1][E[0].getEnemyLoc().y] == 1
               || myMatrix[E[0].getEnemyLoc().x + 1][E[0].getEnemyLoc().y] == 2) && E[0].live){
-            myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y] = 0;
-            myMatrix[E[0].getEnemyLoc().x + 1][E[0].getEnemyLoc().y] = 2;
             E[0].moveEnemy("right");
             }
             */
+
+         PrintMatrix();
          break;
 
    }

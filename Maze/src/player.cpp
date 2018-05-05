@@ -73,7 +73,7 @@ void Player::shootArrow()
         arrAngle = -90;
         arrXdir=-1;
         arrYdir=0;
-        arrowLoc.x = plyLoc.x-1/3;
+        arrowLoc.x = plyLoc.x-unitWidth/2;
         arrowLoc.y = plyLoc.y;
       }
       if(strcmp(playerDir, "right")==0)
@@ -81,7 +81,7 @@ void Player::shootArrow()
         arrAngle =90;
         arrXdir=1;
         arrYdir=0;
-        arrowLoc.x = plyLoc.x+1/3;
+        arrowLoc.x = plyLoc.x+unitWidth/2;
         arrowLoc.y = plyLoc.y;
       }
       if(strcmp(playerDir, "up")==0)
@@ -90,7 +90,7 @@ void Player::shootArrow()
         arrYdir=1;
         arrAngle =180;
 
-        arrowLoc.y = plyLoc.y+1/3;
+        arrowLoc.y = plyLoc.y+unitWidth/2;
         arrowLoc.x = plyLoc.x;
       }
       if(strcmp(playerDir, "down")==0)
@@ -99,7 +99,7 @@ void Player::shootArrow()
         arrYdir=-1;
         arrAngle= 0;
 
-        arrowLoc.y = plyLoc.y-1/3;
+        arrowLoc.y = plyLoc.y-unitWidth/2;
         arrowLoc.x = plyLoc.x;
       }
      }
@@ -265,6 +265,11 @@ void Player::movePlayer(char* dir)
             T->Reset();
         }
    }
+}
+
+loc Player::getPlayerRaw()
+{
+    return plyLoc;
 }
 
 GridLoc Player::getPlayerLoc()

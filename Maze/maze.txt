@@ -12,10 +12,11 @@ wall 6 5
 wall 6 6
 wall 7 6
 wall 3 8
+enemy 0 9
 enemy 3 3
 enemy 7 7
-enemy 0 6
 enemy 9 7
+enemy 9 9
 player 3 5
 arrow 5 6
 chest 0 0

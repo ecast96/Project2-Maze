@@ -33,6 +33,7 @@ class Player
         void loadArrowImage(char *);       // set an image for the Arrow
 
         GridLoc getPlayerLoc();            // player current location
+        loc getPlayerRaw();
         GridLoc getArrowLoc();             // arrow current location
         loc getArrowRaw();
 
