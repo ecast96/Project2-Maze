@@ -41,8 +41,7 @@ class Player
         bool arrowStatus;                  // arrow is active or not
         bool livePlayer;                   // Player live or dead
         bool shootMode;
-        loc plyLoc;                        // viewport location of the player
-        float unitWidth;                   // Unit width of the grid
+        bool hasArrows;
 
     protected:
 
@@ -52,6 +51,8 @@ class Player
     private:
 
     private:
+        loc plyLoc;                        // viewport location of the player
+        float unitWidth;                   // Unit width of the grid
         float xmax, xmin,ymax,ymin;        // animation texture map
         GLuint plyTex;                     // player image handler
         GLuint arrowTex;                   // arrow image handler

@@ -55,7 +55,7 @@ void Enemies::drawEnemy()
     animate();
     glTranslatef(enmLoc.x,enmLoc.y,0.0);
 
-    glScaled(1.0/(float)gridSize,1.0/(float)gridSize,1);
+    glScaled(.65/(float)gridSize,.65/(float)gridSize,1);
 
     glBegin(GL_POLYGON);
         glTexCoord2f(xmin,ymin);

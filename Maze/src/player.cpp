@@ -14,6 +14,7 @@ Player::Player()
     arrowLoc.x = 0.2;
     arrowLoc.y =0.5;
     arrAngle =0;
+    hasArrows = false;
     arrowStatus = false;
     livePlayer = true;
     shootMode = false;
@@ -132,7 +133,7 @@ void Player::drawplayer()
    glTranslatef(plyLoc.x,plyLoc.y,0.0);
 
     glBindTexture(GL_TEXTURE_2D,plyTex);
-    glScaled(1.7/(float)gridSize, 1.7/(float)gridSize,1);
+    glScaled(1.9/(float)gridSize, 1.9/(float)gridSize,1);
 
     glBegin(GL_QUADS);
         glTexCoord2f(xmin,ymin);
@@ -169,7 +170,7 @@ void Player::initPlayer(int gSize,int frams, char *FileName)
     plyLoc.x= -unitWidth;
     plyLoc.y= -unitWidth;
 
-    t= unitWidth;
+    t = unitWidth;
 
     plyTex = TextureLoader(FileName);
 }

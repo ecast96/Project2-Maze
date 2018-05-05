@@ -34,7 +34,8 @@ using namespace std;
 const int mazeSize = 10;
 const double matrixSize = 10;
 
-int myMatrix[mazeSize][mazeSize];
+//int myMatrix[mazeSize][mazeSize];
+int **myMatrix;
 
 const int wallAmount = mazeSize * mazeSize;
 int wallCounter = 1;
@@ -80,7 +81,7 @@ void placeWall(int a, int b){
 
 void placeEnemy(int a, int b){
     if(enemyCounter < enemyAmount){
-        E[enemyCounter].initEnm(M->getGridSize(),4,"images/e.png"); //Load enemy image
+        E[enemyCounter].initEnm(M->getGridSize(),4,"images/chicken.png"); //Load enemy image
         E[enemyCounter].placeEnemy(a,b);
         enemyCounter++;
     }
@@ -113,9 +114,10 @@ void readFile()
             }
             if(label == "player"){
                 cout << "player placed at: " << a << "," << b << endl;
-                P->initPlayer(M->getGridSize(),4,"images/llama_walk.png");   // initialize player pass grid size,image and number of frames
+                P->initPlayer(M->getGridSize(),4,"images/llama.png");   // initialize player pass grid size,image and number of frames
                 P->loadArrowImage("images/arr.png");                // Load arrow image
                 P->placePlayer(a, b);
+                myMatrix[a][b] = 3;
             }
             if(label == "arrow"){
                 cout << "Arrows placed at: " << a << "," << b << endl;
@@ -135,6 +137,24 @@ void readFile()
 }
 
 
+void initMatrix(){
+	myMatrix = new int*[mazeSize];
+	for (int i = 0; i < mazeSize; i++) {
+		myMatrix[i] = new int[mazeSize];
+		for (int j = 0; j < mazeSize; j++)
+			myMatrix[i][j] = 0;
+	}
+}
+void PrintMatrix() {
+	// Display Adjacency matrix
+	for (int i = mazeSize - 1; i >= 0; i--) {
+		for (int j = 0; j < mazeSize; j++)
+			cout << myMatrix[j][i] << " ";
+		cout << endl;
+	}
+	cout << endl;
+}
+
 void init()
 {
     glEnable(GL_COLOR_MATERIAL);
@@ -153,6 +173,9 @@ void init()
 
     glEnable(GL_BLEND);                                 //display images with transparent
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    initMatrix();
+	//PrintMatrix(myMat);
 
     readFile();
 
@@ -179,7 +202,18 @@ void init()
 
 void display(void)
 {
-  glClear (GL_COLOR_BUFFER_BIT);        // clear display screen
+    if(M->gameOver == true){
+        static const auto hasWon = [] { PrintMatrix(); return true;}();
+        /*
+        glClear (GL_COLOR_BUFFER_BIT);        // clear display screen
+        glPushMatrix();
+        M->drawBackground();
+        glPopMatrix();
+        glutSwapBuffers();
+        */
+
+    }else {
+        glClear (GL_COLOR_BUFFER_BIT);        // clear display screen
 
         glPushMatrix();
          M->drawBackground();
@@ -216,7 +250,9 @@ void display(void)
            M->drawArrows();
         glPopMatrix();
 
+
     glutSwapBuffers();
+    }
 }
 
 
@@ -229,14 +265,14 @@ void key(unsigned char key, int x, int y)
         case 'z':
             P->shootMode = !(P->shootMode);
             if(P->shootMode == true)
-                cout << "In shooting mode!\n";
+                cout << "Now in shooting mode." << endl;
             else
-                cout << "In walking mode!\n";
+                cout << "Now in walking mode." << endl;
         break;
 
         case ' ':
           // if(!M->liveSetOfArrws)      // if setof arrows were picked by player
-             P->shootArrow();
+             //P->shootArrow();
         break;
 
         case 27 :                       // esc key to exit
@@ -247,7 +283,6 @@ void key(unsigned char key, int x, int y)
 
     glutPostRedisplay();
 }
-
 
  void GetOGLPos(int x, int y)
 {
@@ -273,28 +308,30 @@ void key(unsigned char key, int x, int y)
 
  void idle(void)
 {
-    //Collision with player and chest
-    if(myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] == 4)
-        M->liveChest = 0;
-
-    //Collision with player and set of arrows(spit)
-    if(myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] == 5)
-        M->liveSetOfArrws = 0;
-
-    //Collision with enemy and player
-    if(E[0].getEnemyLoc().x == P->getPlayerLoc().x && E[0].getEnemyLoc().y == P->getPlayerLoc().y){
-        P->livePlayer = false;
+    //Collision with enemy and player = Lose
+    for(int i  = 0; i < enemyCounter; i++){
+        if(E[i].getEnemyLoc().x == P->getPlayerLoc().x && E[i].getEnemyLoc().y == P->getPlayerLoc().y){
+            static const auto hasDied = [] { cout << "Player has died!" << endl; return true;}();
+            P->livePlayer = false;
+            M->gameOver = 1;
+            myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 2;
+            PrintMatrix();
+            exit(0);
+        }
     }
+
+    //Broken for game edges -possible fix: check raw x, y (floats)
     if(P->arrowStatus == 1){
         //Collision with arrow and walls
         if(myMatrix[P->getArrowLoc().x][P->getArrowLoc().y] == 1)
             P->arrowStatus = 0;
+
         //Collisions with arrows and enemies
         for(int i = 0; i < enemyCounter; i++){
             if(E[i].getEnemyLoc().x == P->getArrowLoc().x && E[i].getEnemyLoc().y == P->getArrowLoc().y){
                 E[i].live = false;
-                E[i].enmLoc.x = 1;
-                E[i].enmLoc.y = 1;
+                myMatrix[E[i].getEnemyLoc().x][E[i].getEnemyLoc().y] = 0;
+                E[i].placeEnemy(mazeSize + 1, mazeSize + 1);
                 P->arrowStatus = false;
             }
         }
@@ -327,73 +364,146 @@ void mouse(int btn, int state, int x, int y){
      glutPostRedisplay();
 };
 
+
+void checkArrows(int x, int y){
+    if(myMatrix[x][y] == 5){
+        cout << "Player has gathered arrows!\n";
+        P->hasArrows = true;
+        M->liveSetOfArrws = false;
+    }
+}
+
+//Collision with player and chest = Win
+void checkChest(int x, int y){
+    if(myMatrix[x][y] == 4){
+        cout << "Player has won!\n";
+        M->liveChest = 0;
+        M->gameOver = 1; //Going to be used for displaying new screen
+        PrintMatrix();
+        exit(0);
+    }
+}
+
 void Specialkeys(int key, int x, int y)
 {
 
-    // Your Code here
     switch(key)
     {
     case GLUT_KEY_UP:
          if(P->shootMode == false){
-             if(!(myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y + 1] == 1))
+             if(!(myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y + 1] == 1)){ //Walking mode
+                checkArrows(P->getPlayerLoc().x, P->getPlayerLoc().y + 1);
+                checkChest(P->getPlayerLoc().x, P->getArrowLoc().y + 1);
+
+                myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
                 P->movePlayer("up");
+                myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
+
+                PrintMatrix();
+             }
          }
-         else {
+         else if(P->hasArrows == true){ //Shooting mode
             P->playerDir = "up";
             P->shootArrow();
          }
-         break;
+
         /*
-         if(!(myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y + 1] == 1) && E[0].live)
+         if(!(myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y + 1] == 1
+              || myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y + 1] == 2) && E[0].live){
+            myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y] = 0;
+            myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y + 1] = 2;
             E[0].moveEnemy("up");
+            }
+            */
+
          break;
-         */
+
 
     case GLUT_KEY_DOWN:
          if(P->shootMode == false){
-             if(!(myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y - 1] == 1))
+             if(!(myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y - 1] == 1)){ //Walking mode
+                checkArrows(P->getPlayerLoc().x, P->getPlayerLoc().y - 1);
+                checkChest(P->getPlayerLoc().x, P->getPlayerLoc().y - 1);
+
+                myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
                 P->movePlayer("down");
+                myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
+
+                PrintMatrix();
+             }
          }
-         else {
+         else if(P->hasArrows == true){ //Shooting mode
             P->playerDir = "down";
             P->shootArrow();
          }
-         break;
+
         /*
-         if(!(myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y - 1] == 1) && E[0].live)
+         if(!(myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y - 1] == 1
+              || myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y - 1] == 2) && E[0].live){
+            myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y] = 0;
+            myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y - 1] = 2;
             E[0].moveEnemy("down");
+            }
+            */
+
          break;
-        */
+
     case GLUT_KEY_LEFT:
         if(P->shootMode == false){
-            if(!(myMatrix[P->getPlayerLoc().x - 1][P->getPlayerLoc().y] == 1))
+            if(!(myMatrix[P->getPlayerLoc().x - 1][P->getPlayerLoc().y] == 1)){ //Walking mode
+                checkArrows(P->getPlayerLoc().x - 1, P->getPlayerLoc().y);      //If next step is set of arrows
+                checkChest(P->getPlayerLoc().x - 1, P->getPlayerLoc().y);       //If next step is chest/goal
+
+                myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
                 P->movePlayer("left");
+                myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
+
+                PrintMatrix();
+            }
         }
-        else {
+        else if(P->hasArrows == true){ //Shooting mode
             P->playerDir = "left";
             P->shootArrow();
         }
-        break;
+
         /*
-         if(!(myMatrix[E[0].getEnemyLoc().x - 1][E[0].getEnemyLoc().y] == 1) && E[0].live)
+         if(!(myMatrix[E[0].getEnemyLoc().x - 1][E[0].getEnemyLoc().y] == 1
+              || myMatrix[E[0].getEnemyLoc().x - 1][E[0].getEnemyLoc().y] == 2) && E[0].live){
+            myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y] = 0;
+            myMatrix[E[0].getEnemyLoc().x - 1][E[0].getEnemyLoc().y] = 2;
             E[0].moveEnemy("left");
+            }
+            */
+
          break;
-        */
+
     case GLUT_KEY_RIGHT:
-         if(P->shootMode == false){
-         if(!(myMatrix[P->getPlayerLoc().x + 1][P->getPlayerLoc().y] == 1))
-            P->movePlayer("right");
-         }
-         else {
+        if(P->shootMode == false){
+            if(!(myMatrix[P->getPlayerLoc().x + 1][P->getPlayerLoc().y] == 1)){ //Walking mode
+                checkArrows(P->getPlayerLoc().x + 1, P->getPlayerLoc().y);
+                checkChest(P->getPlayerLoc().x + 1, P->getPlayerLoc().y);
+
+                myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
+                P->movePlayer("right");
+                myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
+
+                PrintMatrix();
+            }
+        }
+         else if(P->hasArrows){ //Shooting mode
             P->playerDir = "right";
             P->shootArrow();
          }
-         break;
         /*
-         if(!(myMatrix[E[0].getEnemyLoc().x + 1][E[0].getEnemyLoc().y] == 1) && E[0].live)
+         if(!(myMatrix[E[0].getEnemyLoc().x + 1][E[0].getEnemyLoc().y] == 1
+              || myMatrix[E[0].getEnemyLoc().x + 1][E[0].getEnemyLoc().y] == 2) && E[0].live){
+            myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y] = 0;
+            myMatrix[E[0].getEnemyLoc().x + 1][E[0].getEnemyLoc().y] = 2;
             E[0].moveEnemy("right");
+            }
+            */
          break;
-         */
+
    }
   glutPostRedisplay();
 }

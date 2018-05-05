@@ -22,20 +22,20 @@ class wall
         virtual ~wall();                   // De constructor
         wall(int);                         // overload constructor
 
-            void drawWall();               // Draw the Maze wall
-            void wallInit(int, char *);    // initialize the wall
-            void placeWall(int, int);      // place the wall
+        void drawWall();               // Draw the Maze wall
+        void wallInit(int, char *);    // initialize the wall
+        void placeWall(int, int);      // place the wall
 
-            float unitWidth;               // unit width of the grid cell
-            int gridSize;                  // grid size
+        float unitWidth;               // unit width of the grid cell
+        int gridSize;                  // grid size
 
-            bool liveWall;                 // wall status (broken or not)
-            loc wallBrk;                 // viewport location of the wall
+        bool liveWall;                 // wall status (broken or not)
     protected:
 
     private:
-              GLuint wallTex;              // wall texture handler
-              GridLoc GetWallLoc;          // Grid Location of the wall
+        GLuint wallTex;              // wall texture handler
+        GridLoc GetWallLoc;          // Grid Location of the wall
+        loc wallBrk;                 // viewport location of the wall
 };
 
 #endif // WALL_H
