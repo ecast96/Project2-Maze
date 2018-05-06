@@ -40,7 +40,7 @@ int **myMatrix;
 const int wallAmount = mazeSize * mazeSize;
 int wallCounter = 1;
 
-const int enemyAmount = 5;
+const int enemyAmount = 4;
 int enemyCounter = 0;
 
 Maze *M = new Maze(mazeSize);                         // Set Maze grid size
@@ -136,7 +136,6 @@ void readFile()
     }
 }
 
-
 void initMatrix(){
 	myMatrix = new int*[mazeSize];
 	for (int i = 0; i < mazeSize; i++) {
@@ -153,6 +152,15 @@ void PrintMatrix() {
 		cout << endl;
 	}
 	cout << endl;
+}
+
+void deleteAll(){
+	for (int i = 0; i < mazeSize; i++)
+		delete [] myMatrix;
+	delete[] myMatrix;
+	delete P;
+	delete T0;
+	delete M;
 }
 
 void init()
@@ -316,13 +324,14 @@ void key(unsigned char key, int x, int y)
             M->gameOver = 1;
             myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 2;
             PrintMatrix();
+            deleteAll();
             exit(0);
         }
     }
 
     //Broken for game edges -possible fix: check raw x, y (floats)
     if(P->arrowStatus == 1){
-        if(P->getArrowLoc().x - 1 >= -1&& P->getArrowLoc().x + 1 <= 10){
+        if(P->getArrowLoc().x - 1 >= -1 && P->getArrowLoc().x + 1 <= 10){
             cout << "Arrow location: " << P->getArrowLoc().x << "," << P->getArrowLoc().y << endl;
             //Collision with arrow and walls
             if(myMatrix[P->getArrowLoc().x][P->getArrowLoc().y] == 1)
@@ -342,7 +351,6 @@ void key(unsigned char key, int x, int y)
 
     glutPostRedisplay();
 }
-
 
 void mouse(int btn, int state, int x, int y){
 
@@ -383,7 +391,8 @@ void checkChest(int x, int y){
         M->liveChest = 0;
         M->gameOver = 1; //Going to be used for displaying new screen
         PrintMatrix();
-        //exit(0);
+        deleteAll();
+        exit(0);
     }
 }
 
@@ -394,7 +403,7 @@ void Specialkeys(int key, int x, int y)
     {
     case GLUT_KEY_UP:
          if(P->shootMode == false){
-             if(P->getPlayerLoc().y + 1 < 10){
+             if(P->getPlayerLoc().y + 1 < mazeSize){
                  if(!(myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y + 1] == 1)){ //Walking mode
                     //cout << P->getPlayerRaw().x << "," << P->getPlayerRaw().y << endl;
                     checkArrows(P->getPlayerLoc().x, P->getPlayerLoc().y + 1);
@@ -481,7 +490,7 @@ void Specialkeys(int key, int x, int y)
 
     case GLUT_KEY_RIGHT:
         if(P->shootMode == false){
-            if(P->getPlayerLoc().x + 1 < 10){
+            if(P->getPlayerLoc().x + 1 < mazeSize){
                 if(!(myMatrix[P->getPlayerLoc().x + 1][P->getPlayerLoc().y] == 1)){ //Walking mode
                     checkArrows(P->getPlayerLoc().x + 1, P->getPlayerLoc().y);
                     checkChest(P->getPlayerLoc().x + 1, P->getPlayerLoc().y);
