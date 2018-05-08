@@ -14,6 +14,9 @@
 #include <player.h>
 #include <vector>
 #include <utility>
+#include <unordered_map>
+#include <stack>
+#include <list>
 
 #ifdef __APPLE__
 #include <GLUT/glut.h>
@@ -26,29 +29,28 @@
 
 #include <wall.h>
 #include <math.h>
+#include <graph.h>
 
 /* GLUT callback Handlers */
 
 using namespace std;
 
 const int mazeSize = 10;
-const double matrixSize = 10;
-
-//int myMatrix[mazeSize][mazeSize];
+Maze *M = new Maze(mazeSize);                         // Set Maze grid size
 int **myMatrix;
+
+const int verticesCount = 100;
+graph g(verticesCount);
 
 const int wallAmount = mazeSize * mazeSize;
 int wallCounter = 1;
+wall W[wallAmount];                             // wall with number of tile
 
 const int enemyAmount = 4;
 int enemyCounter = 0;
-
-Maze *M = new Maze(mazeSize);                         // Set Maze grid size
-Player *P = new Player();                       // create player
-
-wall W[wallAmount];                             // wall with number of tile
-
 Enemies E[enemyAmount];                         // create number of enemies
+
+Player *P = new Player();                       // create player
 Timer *T0 = new Timer();                        // animation timer
 
 float wWidth, wHeight;                          // display window width and Height
@@ -185,27 +187,10 @@ void init()
     initMatrix();
 	//PrintMatrix(myMat);
 
-    readFile();
-
-    //M->loadBackgroundImage("images/bak.jpg");           // Load maze background image
-    //M->loadChestImage("images/chest.png");              // load chest image
-    //M->placeChest(3,3);                                 // place chest in a grid
-
-    //M->loadSetOfArrowsImage("images/arrwset.png");      // load set of arrows image
-    //M->placeStArrws(5,3);                               // place set of arrows
-
-    //P->initPlayer(M->getGridSize(),6,"images/p.png");   // initialize player pass grid size,image and number of frames
-    //P->loadArrowImage("images/arr.png");                // Load arrow image
-    //P->placePlayer(9,9);                                // Place player
-
-    /*
-    for(int i=0; i<3;i++)
-    {
-        E[i].initEnm(M->getGridSize(),4,"images/e.png"); //Load enemy image
-        E[i].placeEnemy(float(rand()%(M->getGridSize())),float(rand()%(M->getGridSize())));
-        //place enemies random x,y
-    }
-    */
+    readFile(); // Reads input from text file, places objects in maze
+    PrintMatrix();  //Prints current values from matrix
+    g.initGraph(myMatrix, mazeSize); // creates graph to be used by dfs
+    g.DFS(g.returnKey(0, 3));   // runs dfs on graph created
 }
 
 void display(void)
@@ -332,7 +317,6 @@ void key(unsigned char key, int x, int y)
     //Broken for game edges -possible fix: check raw x, y (floats)
     if(P->arrowStatus == 1){
         if(P->getArrowLoc().x - 1 >= -1 && P->getArrowLoc().x + 1 <= 10){
-            cout << "Arrow location: " << P->getArrowLoc().x << "," << P->getArrowLoc().y << endl;
             //Collision with arrow and walls
             if(myMatrix[P->getArrowLoc().x][P->getArrowLoc().y] == 1)
                 P->arrowStatus = 0;
@@ -390,7 +374,6 @@ void checkChest(int x, int y){
         cout << "Player has won!\n";
         M->liveChest = 0;
         M->gameOver = 1; //Going to be used for displaying new screen
-        PrintMatrix();
         deleteAll();
         exit(0);
     }
@@ -405,14 +388,13 @@ void Specialkeys(int key, int x, int y)
          if(P->shootMode == false){
              if(P->getPlayerLoc().y + 1 < mazeSize){
                  if(!(myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y + 1] == 1)){ //Walking mode
-                    //cout << P->getPlayerRaw().x << "," << P->getPlayerRaw().y << endl;
                     checkArrows(P->getPlayerLoc().x, P->getPlayerLoc().y + 1);
                     checkChest(P->getPlayerLoc().x, P->getArrowLoc().y + 1);
 
                     myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
                     P->movePlayer("up");
                     myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
-
+                    PrintMatrix();
                  }
             }
          }
@@ -427,8 +409,6 @@ void Specialkeys(int key, int x, int y)
             E[0].moveEnemy("up");
             }
             */
-
-         PrintMatrix();
          break;
 
 
@@ -442,6 +422,7 @@ void Specialkeys(int key, int x, int y)
                     myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
                     P->movePlayer("down");
                     myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
+                    PrintMatrix();
                  }
              }
          }
@@ -456,8 +437,6 @@ void Specialkeys(int key, int x, int y)
             E[0].moveEnemy("down");
             }
             */
-
-         PrintMatrix();
          break;
 
     case GLUT_KEY_LEFT:
@@ -470,6 +449,7 @@ void Specialkeys(int key, int x, int y)
                     myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
                     P->movePlayer("left");
                     myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
+                    PrintMatrix();
                 }
             }
         }
@@ -484,8 +464,6 @@ void Specialkeys(int key, int x, int y)
             E[0].moveEnemy("left");
             }
             */
-
-         PrintMatrix();
          break;
 
     case GLUT_KEY_RIGHT:
@@ -498,6 +476,7 @@ void Specialkeys(int key, int x, int y)
                     myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
                     P->movePlayer("right");
                     myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
+                    PrintMatrix();
                 }
             }
         }
@@ -512,8 +491,6 @@ void Specialkeys(int key, int x, int y)
             E[0].moveEnemy("right");
             }
             */
-
-         PrintMatrix();
          break;
 
    }
