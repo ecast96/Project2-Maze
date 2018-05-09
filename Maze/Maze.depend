@@ -90,7 +90,7 @@
 	<wall.h>
 	<math.h>
 
-1525820766 source:c:\users\young\documents\github\project2-maze\maze\main.cpp
+1525836111 source:c:\users\young\documents\github\project2-maze\maze\main.cpp
 	<string.h>
 	<CommonThings.h>
 	<Maze.h>
@@ -185,10 +185,11 @@
 	<wall.h>
 	<iostream>
 
-1525824940 source:c:\users\young\documents\github\project2-maze\maze\src\graph.cpp
+1525837045 source:c:\users\young\documents\github\project2-maze\maze\src\graph.cpp
 	"graph.h"
 
-1525820496 c:\users\young\documents\github\project2-maze\maze\include\graph.h
+1525835813 c:\users\young\documents\github\project2-maze\maze\include\graph.h
+	<player.h>
 	<list>
 	<unordered_map>
 	<stack>

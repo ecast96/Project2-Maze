@@ -45,7 +45,7 @@ void graph::addEdge(int v, int w)
     adjList[v].push_back(w); // Add w to v’s list.
 }
 
-void graph::DFS(int s)
+void graph::DFS(int s, Player *P)
 {
     // Initially mark all verices as not visited
     vector<bool> visited(verticesCount, false);
@@ -55,6 +55,7 @@ void graph::DFS(int s)
 
     // Push the current source node.
     stack.push(s);
+    vPath.push_back(s);
 
     while (!stack.empty())
     {
@@ -64,12 +65,17 @@ void graph::DFS(int s)
         if (!visited[s])
         {
             cout << "(" << nodeMap[s].first << ", " << nodeMap[s].second << ") - > ";
+            vPath.push_back(s);
             visited[s] = true;
         }
 
+        if(nodeMap[s].first == P->getPlayerLoc().x && nodeMap[s].second == P->getPlayerLoc().y)
+            return;
+
         for (auto i = adjList[s].begin(); i != adjList[s].end(); ++i)
-            if (!visited[*i])
+            if (!visited[*i]){
                 stack.push(*i);
+            }
     }
 }
 
@@ -116,4 +122,8 @@ void graph::initGraph(int **myMatrix, int mazeSize){
 
     cout << "Number of vertices: " << nodeCounter << endl;
     cout << "Number of edges: " << edgeCount << endl;
+}
+
+pair<int, int> graph::returnAction(){
+    return make_pair(nodeMap[vPath[2]].first, nodeMap[vPath[2]].second);
 }

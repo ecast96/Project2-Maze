@@ -39,12 +39,12 @@ const int mazeSize = 10;
 Maze *M = new Maze(mazeSize);                         // Set Maze grid size
 int **myMatrix;
 
-const int verticesCount = 100;
-graph g(verticesCount);
-
 const int wallAmount = mazeSize * mazeSize;
 int wallCounter = 1;
 wall W[wallAmount];                             // wall with number of tile
+
+const int verticesCount = wallAmount;
+graph g(verticesCount);
 
 const int enemyAmount = 4;
 int enemyCounter = 0;
@@ -184,13 +184,12 @@ void init()
     glEnable(GL_BLEND);                                 //display images with transparent
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    initMatrix();
-	//PrintMatrix(myMat);
-
+    initMatrix(); //
     readFile(); // Reads input from text file, places objects in maze
     PrintMatrix();  //Prints current values from matrix
     g.initGraph(myMatrix, mazeSize); // creates graph to be used by dfs
-    g.DFS(g.returnKey(0, 3));   // runs dfs on graph created
+    cout << endl;
+
 }
 
 void display(void)
@@ -247,9 +246,6 @@ void display(void)
     glutSwapBuffers();
     }
 }
-
-
-
 
 void key(unsigned char key, int x, int y)
 {
@@ -368,7 +364,7 @@ void checkArrows(int x, int y){
     }
 }
 
-//Collision with player and chest = Win
+// Collision with player and chest = Win
 void checkChest(int x, int y){
     if(myMatrix[x][y] == 4){
         cout << "Player has won!\n";
@@ -379,9 +375,45 @@ void checkChest(int x, int y){
     }
 }
 
+
+
+void moveEnemies(){
+    for(int i = 0; i < enemyCounter; i ++){
+        if(E[i].live){
+            cout << "Enemy " << i << " path: ";
+            g.DFS(g.returnKey(E[i].getEnemyLoc().x, E[i].getEnemyLoc().y), P);
+            cout << "\nEnemy [" << i << "] - " << "g.returnAction() returns: (" << g.returnAction().first << ", " << g.returnAction().second << ")\n";
+            if(E[i].getEnemyLoc().x - g.returnAction().first == -1 && E[i].getEnemyLoc().y - g.returnAction().second == 0){
+                myMatrix[E[i].getEnemyLoc().x][E[i].getEnemyLoc().y] = 0;
+                myMatrix[E[i].getEnemyLoc().x + 1][E[i].getEnemyLoc().y] = 2;
+                E[i].moveEnemy("right ");
+                g.vPath.clear();
+            }
+            else if(E[i].getEnemyLoc().x - g.returnAction().first == 1 && E[i].getEnemyLoc().y - g.returnAction().second == 0){
+                myMatrix[E[i].getEnemyLoc().x][E[i].getEnemyLoc().y] = 0;
+                myMatrix[E[i].getEnemyLoc().x - 1][E[i].getEnemyLoc().y] = 2;
+                E[i].moveEnemy("left");
+                g.vPath.clear();
+            }
+            else if(E[i].getEnemyLoc().x - g.returnAction().first == 0 && E[i].getEnemyLoc().y - g.returnAction().second == 1){
+                myMatrix[E[i].getEnemyLoc().x][E[i].getEnemyLoc().y] = 0;
+                myMatrix[E[i].getEnemyLoc().x][E[i].getEnemyLoc().y - 1] = 2;
+                E[i].moveEnemy("down");
+                g.vPath.clear();
+            }
+            else if(E[i].getEnemyLoc().x - g.returnAction().first == 0 && E[i].getEnemyLoc().y - g.returnAction().second == -1){
+                myMatrix[E[i].getEnemyLoc().x][E[i].getEnemyLoc().y] = 0;
+                myMatrix[E[i].getEnemyLoc().x][E[i].getEnemyLoc().y + 1] = 2;
+                E[i].moveEnemy("up");
+                g.vPath.clear();
+            }
+            cout << endl;
+        }
+    }
+}
+
 void Specialkeys(int key, int x, int y)
 {
-
     switch(key)
     {
     case GLUT_KEY_UP:
@@ -394,6 +426,10 @@ void Specialkeys(int key, int x, int y)
                     myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
                     P->movePlayer("up");
                     myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
+
+                    moveEnemies();
+
+                    cout << endl;
                     PrintMatrix();
                  }
             }
@@ -402,13 +438,6 @@ void Specialkeys(int key, int x, int y)
             P->playerDir = "up";
             P->shootArrow();
          }
-
-        /*
-         if(!(myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y + 1] == 1
-              || myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y + 1] == 2)){
-            E[0].moveEnemy("up");
-            }
-            */
          break;
 
 
@@ -422,6 +451,10 @@ void Specialkeys(int key, int x, int y)
                     myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
                     P->movePlayer("down");
                     myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
+
+                    moveEnemies();
+
+                    cout << endl;
                     PrintMatrix();
                  }
              }
@@ -430,13 +463,6 @@ void Specialkeys(int key, int x, int y)
             P->playerDir = "down";
             P->shootArrow();
          }
-
-        /*
-         if(!(myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y - 1] == 1
-              || myMatrix[E[0].getEnemyLoc().x][E[0].getEnemyLoc().y - 1] == 2) && E[0].live){
-            E[0].moveEnemy("down");
-            }
-            */
          break;
 
     case GLUT_KEY_LEFT:
@@ -449,6 +475,10 @@ void Specialkeys(int key, int x, int y)
                     myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
                     P->movePlayer("left");
                     myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
+
+                    moveEnemies();
+
+                    cout << endl;
                     PrintMatrix();
                 }
             }
@@ -457,13 +487,6 @@ void Specialkeys(int key, int x, int y)
             P->playerDir = "left";
             P->shootArrow();
         }
-
-        /*
-         if(!(myMatrix[E[0].getEnemyLoc().x - 1][E[0].getEnemyLoc().y] == 1
-              || myMatrix[E[0].getEnemyLoc().x - 1][E[0].getEnemyLoc().y] == 2) && E[0].live){
-            E[0].moveEnemy("left");
-            }
-            */
          break;
 
     case GLUT_KEY_RIGHT:
@@ -476,6 +499,10 @@ void Specialkeys(int key, int x, int y)
                     myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
                     P->movePlayer("right");
                     myMatrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
+
+                    moveEnemies();
+
+                    cout << endl;
                     PrintMatrix();
                 }
             }
@@ -484,13 +511,6 @@ void Specialkeys(int key, int x, int y)
             P->playerDir = "right";
             P->shootArrow();
          }
-
-        /*
-         if(!(myMatrix[E[0].getEnemyLoc().x + 1][E[0].getEnemyLoc().y] == 1
-              || myMatrix[E[0].getEnemyLoc().x + 1][E[0].getEnemyLoc().y] == 2) && E[0].live){
-            E[0].moveEnemy("right");
-            }
-            */
          break;
 
    }

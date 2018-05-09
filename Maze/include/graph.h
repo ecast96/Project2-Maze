@@ -1,8 +1,10 @@
 #ifndef GRAPH_H
 #define GRAPH_H
+#include <player.h>
 #include <list>
 #include <unordered_map>
 #include <stack>
+//#include <queue>
 #include <vector>
 #include <utility>
 #include <iostream>
@@ -21,12 +23,14 @@ public:
 
     void initGraph(int **, int);
     void addEdge(int v, int w); // to add an edge to graph
-    void DFS(int s);  // prints all vertices in DFS manner
+    void DFS(int s, Player *);  // prints all vertices in DFS manner
+
+    pair<int, int> returnAction();
+    vector<int> vPath;
 
 private:
 
     unordered_map<int, pair<int,int> > nodeMap; // Used to store keys and pairs of coordinates
-
     int verticesCount;    // Number of vertices
     list<int> *adjList;    // adjacency lists
 };
