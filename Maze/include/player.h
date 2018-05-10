@@ -33,17 +33,15 @@ class Player
         void loadArrowImage(char *);       // set an image for the Arrow
 
         GridLoc getPlayerLoc();            // player current location
-        loc getPlayerRaw();
         GridLoc getArrowLoc();             // arrow current location
-        loc getArrowRaw();
 
         int frames;                        // Number of frames for animation
         char *playerDir;                   // direction of player face
 
         bool arrowStatus;                  // arrow is active or not
         bool livePlayer;                   // Player live or dead
-        bool shootMode;
-        bool hasArrows;
+        bool shootMode;                    // Player in shooting mode or not(walking)
+        bool hasArrows;                    // Player has acquired arrows
 
     protected:
 

@@ -1,0 +1,11 @@
+enemy 4 5
+
+enemy 6 3
+
+enemy 9 3
+
+player 3 3
+
+arrow 2 0
+
+chest 9 9

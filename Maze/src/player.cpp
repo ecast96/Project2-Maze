@@ -122,12 +122,6 @@ GridLoc Player::getArrowLoc()
    return val;
 }
 
-loc Player::getArrowRaw()
-{
-    return arrowLoc;
-}
-
-
 void Player::drawplayer()
 {
     if(livePlayer)
@@ -265,11 +259,6 @@ void Player::movePlayer(char* dir)
             T->Reset();
         }
    }
-}
-
-loc Player::getPlayerRaw()
-{
-    return plyLoc;
 }
 
 GridLoc Player::getPlayerLoc()
