@@ -38,12 +38,13 @@ How to run:
 
 1. Open the CodeBlocks project file named "Maze.cbp".
    - You will need to add all .cpp and .h files to project using "Project/Add files" EXCEPT CommonThings.cpp.
+   - You might also need to link the OpenGL and SOIL libraries along with rebuilding the project.
 2. Compile and run game.
 
 Files included are:
  - commonthings.h (framework)
  - enemies.cpp/.h (framework)
- - graph.cpp/.h
+ - graph.cpp/.h (created for shortest path algorithm)
  - maze.cpp/.h (framework)
  - player.cpp/.h (framework)
  - timer.cpp/.h (framework)
