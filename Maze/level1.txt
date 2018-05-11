@@ -34,7 +34,7 @@ wall 3 8
 enemy 1 6
 enemy 5 4
 enemy 5 7
-enemy 9 1
+enemy 7 1
 player 0 0
 arrow 0 8
 chest 9 0
