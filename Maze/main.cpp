@@ -35,7 +35,7 @@
 
 using namespace std;
 
-const int mazeSize = 10;                        // Size of maze
+const int mazeSize = 10;
 Maze *M = new Maze(mazeSize);                   // Set maze grid size
 Maze *menu = new Maze(mazeSize);                // Used for displaying menus screen
 Maze *won = new Maze(mazeSize);                 // Used for displaying "Player has won"  screen
@@ -51,7 +51,7 @@ wall W[wallAmount];                             // Wall with number of tile
 const int verticesCount = wallAmount;           // Amount of maximum vertices
 graph g(verticesCount);                         // Graph object used for AI
 
-const int enemyAmount = 4;                      // Amount of enemies
+const int enemyAmount = 10;                      // Amount of enemies
 int enemyCounter = 0;                           // Counter for amount of enemies placed into matrix
 Enemies E[10];                                  // create number of enemies
 
@@ -439,7 +439,7 @@ void moveEnemies(){
             if(E[i].getEnemyLoc().x - g.returnAction().first == -1 && E[i].getEnemyLoc().y - g.returnAction().second == 0){ //If action returned is right
                 myMatrix[E[i].getEnemyLoc().x][E[i].getEnemyLoc().y] = 0;       //Clears matrix with enemy's previous location
                 myMatrix[E[i].getEnemyLoc().x + 1][E[i].getEnemyLoc().y] = 2;   //Updates matrix with enemy's new location
-                E[i].moveEnemy("right ");                                       //Moves enemy[i] right one spot
+                E[i].moveEnemy("right");                                       //Moves enemy[i] right one spot
                 g.clearVector();                                                //Clears vector containing moves
             }
             else if(E[i].getEnemyLoc().x - g.returnAction().first == 1 && E[i].getEnemyLoc().y - g.returnAction().second == 0){ //If action returned is left

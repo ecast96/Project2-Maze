@@ -48,6 +48,8 @@ class Maze
       bool gameOver;
       float unitWidth;                    // Unit width of the grid
 
+      int returnMazeSize(int);
+
     protected:
 
       int gridSize;                       // grid size
