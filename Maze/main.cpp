@@ -492,8 +492,8 @@ void Specialkeys(int key, int x, int y)
 
                     moveEnemies();                                                   //Calls function to move enemies on player movement
 
-                    cout << endl;
-                    PrintMatrix();
+                    //cout << endl;
+                    //PrintMatrix();
                  }
             }
          }
@@ -517,8 +517,8 @@ void Specialkeys(int key, int x, int y)
 
                     moveEnemies();
 
-                    cout << endl;
-                    PrintMatrix();
+                    //cout << endl;
+                    //PrintMatrix();
                  }
              }
          }
@@ -541,8 +541,8 @@ void Specialkeys(int key, int x, int y)
 
                     moveEnemies();
 
-                    cout << endl;
-                    PrintMatrix();
+                    //cout << endl;
+                    //PrintMatrix();
                 }
             }
         }
@@ -565,8 +565,8 @@ void Specialkeys(int key, int x, int y)
 
                     moveEnemies();
 
-                    cout << endl;
-                    PrintMatrix();
+                    //cout << endl;
+                    //PrintMatrix();
                 }
             }
         }
