@@ -197,7 +197,7 @@
 	<utility>
 	<iostream>
 
-1526007384 source:c:\users\erick\documents\github\project2-maze\maze\main.cpp
+1526025200 source:c:\users\erick\documents\github\project2-maze\maze\main.cpp
 	<string.h>
 	<CommonThings.h>
 	<Maze.h>
@@ -291,10 +291,10 @@
 1526003391 source:c:\users\erick\documents\github\project2-maze\maze\src\graph.cpp
 	"graph.h"
 
-1526004235 source:c:\users\erick\documents\github\project2-maze\maze\src\maze.cpp
+1526025200 source:c:\users\erick\documents\github\project2-maze\maze\src\maze.cpp
 	<Maze.h>
 
-1526003391 source:c:\users\erick\documents\github\project2-maze\maze\src\player.cpp
+1526025200 source:c:\users\erick\documents\github\project2-maze\maze\src\player.cpp
 	<Player.h>
 
 1525328086 source:c:\users\erick\documents\github\project2-maze\maze\src\timer.cpp

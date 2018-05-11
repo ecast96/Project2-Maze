@@ -136,7 +136,7 @@ void Maze::drawArrows()
     glRotated(-spin,0,0,1);
 
     glBindTexture(GL_TEXTURE_2D,ArrBnchTex);
-    glScaled(1.0/(float)(gridSize),1.0/(float)(gridSize),1.0);
+    glScaled(1.0/(float)(gridSize + 5),1.0/(float)(gridSize + 5),1.0);   //Changed to + 5 to reduce size
 
     glBegin(GL_QUADS);
         glTexCoord2f(0,1);
@@ -162,7 +162,7 @@ void Maze::drawChest()
     glTranslatef(chestLoc.x,chestLoc.y,1.0);
 
     glBindTexture(GL_TEXTURE_2D,chestTex);
-    glScaled(1.0/(float)(gridSize+5),1.0/(float)(gridSize+5),1.0);
+    glScaled(1.0/(float)(gridSize+3),1.0/(float)(gridSize+3),1.0);    //changed from +5 to +3 to decrease size
     glRotated(spin,0,0,1);
 
     glBegin(GL_QUADS);
@@ -179,7 +179,7 @@ void Maze::drawChest()
         glVertex3f(-1,-1,0.0f);
      glEnd();
 
-     spin +=0.5;
+     //spin +=0.5;                                                  //Commented out the spin to stop the spin
     }
 }
 

@@ -31,9 +31,9 @@ void Player::drawArrow()
 if(arrowStatus){
    glColor3f(1.0,1.0,1.0);
 
-     if(T->GetTicks()>35)
+     if(T->GetTicks()>137)   //Changed tick from 30 to 137
         {
-            if(arrowLoc.x>=-1.1 && arrowLoc.x<=1.1)
+            if(arrowLoc.x>=-1.1&& arrowLoc.x<=1.1)
                 arrowLoc.x += t*arrXdir;
             else arrowStatus = false;
             if(arrowLoc.y>=-1.1 && arrowLoc.y<=1.1)

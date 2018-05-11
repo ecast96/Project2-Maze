@@ -8,6 +8,11 @@ Graphics used were created by Daniel Eddeland (https://opengameart.org/content/l
 Game was created using CodeBLock 13.12.
  - Given framework uses OpenGL and SOIL libraries for displaying
 
+NOTES:
+- Enemy AI is not optimized. Enemies only move up and down.
+- When the level ends, the option to return back to menu isn't fully implemented.
+- Ending the game when all enemies die isn't fully implemented.
+
 
 Game Information: 
 
