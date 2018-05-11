@@ -77,7 +77,7 @@ void resize(int width, int height)              // resizing case on the window
 //Places wall into matrix with coordinates passed into function
 void placeWall(int a, int b){
     if(wallCounter < wallAmount){
-        W[wallCounter].wallInit(M->getGridSize(),"images/wall.png");// Load walls
+        W[wallCounter].wallInit(M->getGridSize(),"images/bush.png");// Load walls
         W[wallCounter].placeWall(a, b);
         wallCounter++;
     }
@@ -130,20 +130,20 @@ void readFile(string textFile)
             if(label == "player"){
                 cout << "player placed at: " << a << "," << b << endl;
                 P->initPlayer(M->getGridSize(),4,"images/llama.png");   // initialize player pass grid size,image and number of frames
-                P->loadArrowImage("images/arr.png");                // Load arrow image
+                P->loadArrowImage("images/spit.png");                // Load arrow image
                 P->placePlayer(a, b);
                 myMatrix[a][b] = 3;
             }
             if(label == "arrow"){
                 cout << "Arrows placed at: " << a << "," << b << endl;
-                M->loadSetOfArrowsImage("images/arrwset.png");      // load set of arrows image
+                M->loadSetOfArrowsImage("images/bucket.png");      // load set of arrows image
                 M->placeStArrws(a, b);
                 myMatrix[a][b] = 5;
             }
             if(label == "chest"){
                 cout << "Chest found at: " << a << "," << b << endl;
-                M->loadBackgroundImage("images/bak.jpg");           // Load maze background image
-                M->loadChestImage("images/chest.png");              // load chest image
+                M->loadBackgroundImage("images/back.png");           // Load maze background image
+                M->loadChestImage("images/hay.png");              // load chest image
                 M->placeChest(a, b);
                 myMatrix[a][b] = 4;
             }
@@ -179,6 +179,9 @@ void deleteAll(){
 	delete P;
 	delete T0;
 	delete M;
+	delete won;
+	delete menu;
+	delete lost;
 }
 
 void init()
