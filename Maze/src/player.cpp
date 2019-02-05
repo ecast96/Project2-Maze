@@ -14,8 +14,10 @@ Player::Player()
     arrowLoc.x = 0.2;
     arrowLoc.y =0.5;
     arrAngle =0;
+    hasArrows = false;
     arrowStatus = false;
     livePlayer = true;
+    shootMode = false;
 }
 
 Player::~Player()
@@ -29,12 +31,12 @@ void Player::drawArrow()
 if(arrowStatus){
    glColor3f(1.0,1.0,1.0);
 
-     if(T->GetTicks()>10)
+     if(T->GetTicks()>35)
         {
-            if(arrowLoc.x>=-1 && arrowLoc.x<=1)
+            if(arrowLoc.x>=-1.1 && arrowLoc.x<=1.1)
                 arrowLoc.x += t*arrXdir;
             else arrowStatus = false;
-            if(arrowLoc.y>=-1 && arrowLoc.y<=1)
+            if(arrowLoc.y>=-1.1 && arrowLoc.y<=1.1)
                 arrowLoc.y += t*arrYdir;
             else arrowStatus = false;
            T->Reset();
@@ -120,7 +122,6 @@ GridLoc Player::getArrowLoc()
    return val;
 }
 
-
 void Player::drawplayer()
 {
     if(livePlayer)
@@ -128,11 +129,10 @@ void Player::drawplayer()
 
    glColor3f(1.0,1.0,1.0);
 
-   glTranslatef(plyLoc.x ,plyLoc.y,0.0);
+   glTranslatef(plyLoc.x,plyLoc.y,0.0);
 
     glBindTexture(GL_TEXTURE_2D,plyTex);
-    glScaled(1.0/(float)gridSize,1.0/(float)gridSize,1);
-
+    glScaled(1.9/(float)gridSize, 1.9/(float)gridSize,1);
 
     glBegin(GL_QUADS);
         glTexCoord2f(xmin,ymin);
@@ -146,6 +146,7 @@ void Player::drawplayer()
 
         glTexCoord2f(xmin,ymax);
         glVertex3f(1,-1,0.0f);
+
      glEnd();
     }
 }
@@ -168,7 +169,7 @@ void Player::initPlayer(int gSize,int frams, char *FileName)
     plyLoc.x= -unitWidth;
     plyLoc.y= -unitWidth;
 
-    t= unitWidth/stepsPerMove;
+    t = unitWidth;
 
     plyTex = TextureLoader(FileName);
 }
@@ -224,7 +225,7 @@ void Player::movePlayer(char* dir)
    {
         playerDir = "up";
         if(T->GetTicks()>1)
-        { if(plyLoc.y< 1-unitWidth/2)
+        { if(plyLoc.y< 1 - unitWidth/2 )
             plyLoc.y += t;
             if(xmax>=1){
                 xmax =1/(float)frames;

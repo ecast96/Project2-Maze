@@ -45,6 +45,8 @@ void Enemies::initEnm(int grid,int numFrames, char * FileName)
 
 void Enemies::drawEnemy()
 {
+    drawLive = true;
+    if(live){
     glColor3f(1.0,1.0,1.0);
     glBindTexture(GL_TEXTURE_2D,enmTex);
 
@@ -53,7 +55,7 @@ void Enemies::drawEnemy()
     animate();
     glTranslatef(enmLoc.x,enmLoc.y,0.0);
 
-    glScaled(1.0/(float)gridSize,1.0/(float)gridSize,1);
+    glScaled(.65/(float)gridSize,.65/(float)gridSize,1);
 
     glBegin(GL_POLYGON);
         glTexCoord2f(xmin,ymin);
@@ -69,6 +71,7 @@ void Enemies::drawEnemy()
         glVertex3f(1,-1,0.0f);
      glEnd();
      glPopMatrix();
+    }
 }
 
 void Enemies::placeEnemy(int x, int y)

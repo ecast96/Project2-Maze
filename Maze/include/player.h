@@ -40,16 +40,19 @@ class Player
 
         bool arrowStatus;                  // arrow is active or not
         bool livePlayer;                   // Player live or dead
+        bool shootMode;                    // Player in shooting mode or not(walking)
+        bool hasArrows;                    // Player has acquired arrows
+
     protected:
 
         float t;                           // Ticker for animation
         void timer();                      // Timer for animation
         int gridSize;                      // Grid Size
+    private:
+
+    private:
+        loc plyLoc;                        // viewport location of the player
         float unitWidth;                   // Unit width of the grid
-
-    private:
-
-    private:
         float xmax, xmin,ymax,ymin;        // animation texture map
         GLuint plyTex;                     // player image handler
         GLuint arrowTex;                   // arrow image handler
@@ -57,7 +60,6 @@ class Player
         int arrYdir;                       // arrow direction y
         float arrAngle;                    // animation direction of the arrow
         loc arrowLoc;                      // viewport location of the arrow
-        loc plyLoc;                        // viewport location of the player
         loc converter(int, int);           // convert Grid location to viewport
         int stepsPerMove;                  // animation steps
 

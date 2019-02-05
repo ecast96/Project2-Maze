@@ -19,6 +19,7 @@ Maze::Maze(int gSize)                                        // Constructor
     unitWidth = (float)2/gridSize;
     liveChest = true;
     liveSetOfArrws=true;
+    gameOver = false;
 }
 
 Maze::~Maze()
@@ -193,4 +194,12 @@ loc Maze::converter(int x, int y)
        return val;
 }
 
+int Maze::returnMazeSize(int input){
+    if(input == 1)
+        return 8;
+    else if(input == 2)
+        return 10;
+    else if(input == 3)
+        return 12;
+}
 

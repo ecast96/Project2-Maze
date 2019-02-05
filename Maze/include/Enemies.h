@@ -25,14 +25,15 @@ class Enemies
         void animate();                     // Animate sprite
         GridLoc getEnemyLoc();              // Return Enemy current grid location
 
-
         int gridSize;                       // Grid size of the maze
         float unitWidth;                    // Unit width of the grid
         int stepsPerMove;                   // Step count for animation
         bool live;                          // Status of the Enemy
+        bool drawLive = false;
     protected:
 
     private:
+         loc enmLoc;                        // location of the enemy
          int frames;                        // number of frames generally
          float t;                           // steps for animation count
          GLuint enmTex;                     // Image Texture
@@ -40,7 +41,6 @@ class Enemies
          float xmax, xmin,ymax,ymin;        // Animated Texture mapping
          bool up,down,left,right;           // move direction
          float moveDis=0;                   // Moving distance for animation
-         loc enmLoc;                        // location of the enemy
 };
 
 #endif // ENEMIES_H

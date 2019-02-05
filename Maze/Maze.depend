@@ -90,7 +90,7 @@
 	<wall.h>
 	<math.h>
 
-1525321056 source:c:\users\young\documents\github\project2-maze\maze\main.cpp
+1525911464 source:c:\users\young\documents\github\project2-maze\maze\main.cpp
 	<string.h>
 	<CommonThings.h>
 	<Maze.h>
@@ -102,12 +102,16 @@
 	<player.h>
 	<vector>
 	<utility>
+	<unordered_map>
+	<stack>
+	<list>
 	<GLUT/glut.h>
 	<GL/glut.h>
 	<stdlib.h>
 	<Enemies.h>
 	<wall.h>
 	<math.h>
+	<graph.h>
 
 1524046490 c:\users\young\documents\github\project2-maze\maze\include\commonthings.h
 	<GL/gl.h>
@@ -120,7 +124,7 @@
 1524046490 c:\users\young\documents\github\project2-maze\maze\include\timer.h
 	<time.h>
 
-1525125971 c:\users\young\documents\github\project2-maze\maze\include\maze.h
+1525496204 c:\users\young\documents\github\project2-maze\maze\include\maze.h
 	<CommonThings.h>
 	<string.h>
 	<gl/gl.h>
@@ -136,7 +140,7 @@
 	<GL/gl.h>
 	<GL/glu.h>
 
-1524590816 c:\users\young\documents\github\project2-maze\maze\include\player.h
+1525851686 c:\users\young\documents\github\project2-maze\maze\include\player.h
 	<CommonThings.h>
 	<string.h>
 	<gl/gl.h>
@@ -146,7 +150,7 @@
 	<Timer.h>
 	<math.h>
 
-1525321011 c:\users\young\documents\github\project2-maze\maze\include\enemies.h
+1525851504 c:\users\young\documents\github\project2-maze\maze\include\enemies.h
 	<CommonThings.h>
 	<Maze.h>
 	<time.h>
@@ -154,7 +158,7 @@
 	<string>
 	<math.h>
 
-1524475940 c:\users\young\documents\github\project2-maze\maze\include\wall.h
+1525469076 c:\users\young\documents\github\project2-maze\maze\include\wall.h
 	<CommonThings.h>
 	<string.h>
 	<gl/gl.h>
@@ -164,20 +168,139 @@
 	<Timer.h>
 	<math.h>
 
-1524473884 source:c:\users\young\documents\github\project2-maze\maze\src\enemies.cpp
+1525552375 source:c:\users\young\documents\github\project2-maze\maze\src\enemies.cpp
 	<Enemies.h>
 	<iostream>
 
-1525125983 source:c:\users\young\documents\github\project2-maze\maze\src\maze.cpp
+1525469719 source:c:\users\young\documents\github\project2-maze\maze\src\maze.cpp
 	<Maze.h>
 
-1524594554 source:c:\users\young\documents\github\project2-maze\maze\src\player.cpp
+1525851642 source:c:\users\young\documents\github\project2-maze\maze\src\player.cpp
 	<Player.h>
 
 1524046490 source:c:\users\young\documents\github\project2-maze\maze\src\timer.cpp
 	"Timer.h"
 
 1524476010 source:c:\users\young\documents\github\project2-maze\maze\src\wall.cpp
+	<wall.h>
+	<iostream>
+
+1525851309 source:c:\users\young\documents\github\project2-maze\maze\src\graph.cpp
+	"graph.h"
+
+1525851380 c:\users\young\documents\github\project2-maze\maze\include\graph.h
+	<player.h>
+	<list>
+	<unordered_map>
+	<stack>
+	<vector>
+	<utility>
+	<iostream>
+
+1526007384 source:c:\users\erick\documents\github\project2-maze\maze\main.cpp
+	<string.h>
+	<CommonThings.h>
+	<Maze.h>
+	<iostream>
+	<fstream>
+	<sstream>
+	<string>
+	<Timer.h>
+	<player.h>
+	<vector>
+	<utility>
+	<unordered_map>
+	<stack>
+	<list>
+	<GLUT/glut.h>
+	<GL/glut.h>
+	<stdlib.h>
+	<Enemies.h>
+	<wall.h>
+	<math.h>
+	<graph.h>
+
+1525328086 c:\users\erick\documents\github\project2-maze\maze\include\commonthings.h
+	<GL/gl.h>
+	<SOIL.h>
+	<iostream>
+	<Timer.h>
+
+1525328086 c:\users\erick\documents\github\project2-maze\maze\common\inc\soil.h
+
+1525328086 c:\users\erick\documents\github\project2-maze\maze\include\timer.h
+	<time.h>
+
+1526004252 c:\users\erick\documents\github\project2-maze\maze\include\maze.h
+	<CommonThings.h>
+	<string.h>
+	<gl/gl.h>
+	<GL/glut.h>
+	<SOIL.h>
+	<iostream>
+	<Timer.h>
+	<math.h>
+
+1525328086 c:\users\erick\documents\github\project2-maze\maze\common\inc\gl\glut.h
+	<windows.h>
+	<stdlib.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1526003391 c:\users\erick\documents\github\project2-maze\maze\include\player.h
+	<CommonThings.h>
+	<string.h>
+	<gl/gl.h>
+	<GL/glut.h>
+	<SOIL.h>
+	<iostream>
+	<Timer.h>
+	<math.h>
+
+1526003391 c:\users\erick\documents\github\project2-maze\maze\include\enemies.h
+	<CommonThings.h>
+	<Maze.h>
+	<time.h>
+	<thread>
+	<string>
+	<math.h>
+
+1525571263 c:\users\erick\documents\github\project2-maze\maze\include\wall.h
+	<CommonThings.h>
+	<string.h>
+	<gl/gl.h>
+	<GL/glut.h>
+	<SOIL.h>
+	<iostream>
+	<Timer.h>
+	<math.h>
+
+1526003391 c:\users\erick\documents\github\project2-maze\maze\include\graph.h
+	<player.h>
+	<list>
+	<unordered_map>
+	<stack>
+	<vector>
+	<utility>
+	<iostream>
+
+1525571263 source:c:\users\erick\documents\github\project2-maze\maze\src\enemies.cpp
+	<Enemies.h>
+	<iostream>
+
+1526003391 source:c:\users\erick\documents\github\project2-maze\maze\src\graph.cpp
+	"graph.h"
+
+1526004235 source:c:\users\erick\documents\github\project2-maze\maze\src\maze.cpp
+	<Maze.h>
+
+1526003391 source:c:\users\erick\documents\github\project2-maze\maze\src\player.cpp
+	<Player.h>
+
+1525328086 source:c:\users\erick\documents\github\project2-maze\maze\src\timer.cpp
+	"Timer.h"
+
+1525328086 source:c:\users\erick\documents\github\project2-maze\maze\src\wall.cpp
 	<wall.h>
 	<iostream>
 
